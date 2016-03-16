@@ -7,7 +7,10 @@ from requirements.views import home
 from requirements import req_urls
 from rest_framework import routers, serializers, viewsets
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken import views as rest_views
+from rest_framework_jwt.views import obtain_jwt_token
 from comm import views
+from requirements.views import views as rqmt_views
 
 router = DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -17,6 +20,7 @@ router.register(r'messagesearch', views.MessageSearchSet)
 router.register(r'messagedata', views.MessageDataViewSet)
 router.register(r'roomuser', views.UserRoomViewSet)
 router.register(r'roomuserdata', views.UserRoomDataViewSet)
+router.register(r'projects', rqmt_views.ProjectViewSet)
 
 
 urlpatterns = [
@@ -31,6 +35,8 @@ urlpatterns = [
                         url(r'^admin/doc/',include('django.contrib.admindocs.urls')),
                         url(r'^api/', include(router.urls)),
                         
-                        url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+                        url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+                        url(r'^api-token-auth/', obtain_jwt_token),
+                        url(r'^example/', rqmt_views.ExampleView)
                        # url(r'^admin/', include(admin.site.urls)),
                       ]

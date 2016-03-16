@@ -22,7 +22,7 @@ class UserAssociation(models.Model):
         return permission in self.get_role_permissions(self.role)
 
         def test_function():
-            return false
+            return False
 
     def get_role_permissions(self, role):
 

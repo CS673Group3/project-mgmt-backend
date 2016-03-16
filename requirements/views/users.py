@@ -49,10 +49,13 @@ def signin(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                
                 if next == '':
-                    return HttpResponseRedirect('/req/projects')
+                    response = HttpResponseRedirect('/req/projects')
+                    return response
                 else:
-                    return HttpResponseRedirect(next)
+                    response = HttpResponseRedirect(next)
+                    return response
         else:
             errormsg = 'Username or Password is incorrect ! Please try again !'
     return render_to_response('SignIn.html',
@@ -122,3 +125,4 @@ def userprofile(request):
         'button_desc': 'Change Profile'
     }
     return render(request, 'UserProfile.html', context)
+    

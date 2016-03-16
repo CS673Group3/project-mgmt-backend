@@ -1,7 +1,7 @@
 from django.contrib.auth import models as auth_models
 from django.core.urlresolvers import reverse
 from django.db import models
-from requirements.models import project as project_model
+from requirements.models import project
 
 OPEN_STATUSES = (
     ('Open-New', 'New',),
@@ -41,7 +41,7 @@ class Issue(models.Model):
     priority = models.CharField(max_length=20, choices=PRIORITIES)
 
     # Project
-    project = models.ForeignKey(project_model.Project,
+    project = models.ForeignKey(project.Project,
                                 null=True)
     # Dates
     submitted_date = models.DateTimeField(auto_now_add=True, editable=False)
