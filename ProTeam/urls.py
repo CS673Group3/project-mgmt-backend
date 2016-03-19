@@ -36,7 +36,7 @@ urlpatterns = [
                         url(r'^api/', include(router.urls)),
                         
                         url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-                        url(r'^api-token-auth/', obtain_jwt_token),
+                        url(r'^get-token/', obtain_jwt_token),
                         url(r'^example/', rqmt_views.ExampleView)
                        # url(r'^admin/', include(admin.site.urls)),
                       ]

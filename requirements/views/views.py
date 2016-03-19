@@ -30,6 +30,10 @@ class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = projectSerializer
     
+##class UserStoryViewSet():
+    ##queryset = ...
+    ##serializer_class = ... 
+    
 class ProjectList(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = projectSerializer
