@@ -10,6 +10,9 @@ from .story import Story
 def get_all_projects():
     return Project.objects.all()
 
+def get_stories_for_projects(project):
+    Story.get_stories_for_project(project)
+
 
 def get_associations_for_user(userID):
     # Returns the associations between this user and his/her projects,

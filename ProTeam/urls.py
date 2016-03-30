@@ -21,6 +21,7 @@ router.register(r'messagedata', views.MessageDataViewSet)
 router.register(r'roomuser', views.UserRoomViewSet)
 router.register(r'roomuserdata', views.UserRoomDataViewSet)
 router.register(r'projects', rqmt_views.ProjectViewSet)
+router.register(r'userstories', rqmt_views.userStoryViewSet )
 
 
 urlpatterns = [
@@ -37,6 +38,7 @@ urlpatterns = [
                         
                         url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
                         url(r'^get-token/', obtain_jwt_token),
-                        url(r'^example/', rqmt_views.ExampleView)
+                        url(r'^example/', rqmt_views.ExampleView),
                        # url(r'^admin/', include(admin.site.urls)),
+                        url('^api/userstories(?P<projectID>\d+)/', rqmt_views.userStory_list),
                       ]

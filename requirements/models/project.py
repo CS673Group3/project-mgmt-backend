@@ -11,7 +11,8 @@ class Project(ProjMgmtBase):
 
     users = models.ManyToManyField(User, through='UserAssociation')
     
-    #stories = story_model.Story()
+    #def __id__(self):
+        #return self.ID
 
     def __str__(self):
         return self.title

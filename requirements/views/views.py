@@ -17,18 +17,25 @@ from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 from requirements.models.project import Project
 from requirements.models.serializers import projectSerializer
+from requirements.models.serializers import userStorySerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
+from requirements.models import project_api
+from requirements.models.story import Story as aStory
 from rest_framework.authentication import SessionAuthentication,\
     BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.request import Request
 
 ## Django REST framework classes...
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = projectSerializer
+    
+class userStoryViewSet(viewsets.ModelViewSet):
+    queryset = aStory.objects.all() 
+    serializer_class = userStorySerializer
     
 ##class UserStoryViewSet():
     ##queryset = ...
@@ -68,6 +75,24 @@ def project_list(request):
             serializer.save()
             return JSONResponse(serializer.data, status=201)
         return JSONResponse(serializer.data, status=400)
+   
+def userStory_list(request, projectID):
+    serializer_context = {
+    'request': request,
+    }
+    project = project_api.get_project(projectID)    
+    if request.method == 'GET':
+        #stories = aStory.get_stories_for_project(project
+        stories = aStory.objects.filter(project_id=project.id)                               
+        serializer = userStorySerializer(stories,context=serializer_context, many=True)
+        return JSONResponse(serializer.data)
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = userStorySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data, status=201)
+    return JSONResponse(serializer.data, status=400)
     
 class ExampleView(APIView):
     authentication_classes = (SessionAuthentication, BasicAuthentication, TokenAuthentication)
