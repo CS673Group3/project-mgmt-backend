@@ -5,9 +5,11 @@ from comm.models import User, Room, Message, UserRoom
 from rest_framework import viewsets, generics, filters
 from comm.serializers import UserSerializer, RoomSerializer, MessageSerializer, MessageDataSerializer, UserRoomSerializer, UserRoomDataSerializer
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 import random
 
 # Return the main chat room
+@ensure_csrf_cookie
 @login_required(login_url='/signin')
 def index(request):
 	context = {'user': request.user}
