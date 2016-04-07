@@ -11,7 +11,7 @@ def get_all_projects():
     return Project.objects.all()
 
 def get_stories_for_projects(project):
-    Story.get_stories_for_project(project)
+    return Story.objects.filter(project=project)
 
 
 def get_associations_for_user(userID):
@@ -20,8 +20,11 @@ def get_associations_for_user(userID):
     return UserAssociation.objects.filter(user__id=userID)
 
 
-def get_projects_for_user(userID):
+def get_projects_for_user(userID): 
+    #user = get_current_user_by_id(userID)
+    #a = user.project_set.all()
     return Project.objects.filter(users__id__contains=userID)
+        
 
 
 def get_project(projectID):
@@ -33,6 +36,16 @@ def get_project(projectID):
 
 def get_project_users(projectID):
     return UserAssociation.objects.filter(project__id=projectID)
+
+def get_current_user_by_username(User_Name):
+    return User.objects.filter(username=User_Name)
+
+def get_current_user_by_id(userID):
+    return User.objects.filter(id=userID)
+
+def get_user_id(User_Name):
+    user = User.objects.get(username=User_Name)
+    return user.id
 
 
 def can_user_access_project(userID, projectID):

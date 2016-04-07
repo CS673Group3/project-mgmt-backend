@@ -21,8 +21,20 @@ router.register(r'messagedata', views.MessageDataViewSet)
 router.register(r'roomuser', views.UserRoomViewSet)
 router.register(r'roomuserdata', views.UserRoomDataViewSet)
 router.register(r'projects', rqmt_views.ProjectViewSet)
-router.register(r'userstories', rqmt_views.userStoryViewSet )
+#router.register(r'userstories', rqmt_views.userStoryViewSet )
+#router.register(r'currentuser', rqmt.views.currentUserViewSet)
 
+UserDetails = rqmt_views.currentUserViewSet.as_view({
+    'get': 'userInfo'
+})
+
+UserProjects = rqmt_views.currentUserViewSet.as_view({
+    'get': 'userProjects'
+})
+
+UserStories = rqmt_views.currentUserViewSet.as_view({
+    'get': 'userStories'
+}) 
 
 urlpatterns = [
                         url(r'^signin', users.signin),
@@ -40,5 +52,11 @@ urlpatterns = [
                         url(r'^get-token/', obtain_jwt_token),
                         url(r'^example/', rqmt_views.ExampleView),
                        # url(r'^admin/', include(admin.site.urls)),
-                        url('^api/userstories(?P<projectID>\d+)/', rqmt_views.userStory_list),
+                        #url('^api/userstories/(?P<projectID>\d+)/', rqmt_views.userStory_list),
+                        url(r'^api/userstories$', rqmt_views.userStory_list),
+                        url(r'^api/users/$',UserDetails),
+                        url(r'^api/(?P<userName>\w+)/$',UserDetails,name = 'user-details'),
+                        url(r'^api/(?P<userName>\w+)/projects/$',UserProjects,name = 'user-projects'),
+                        url(r'^api/(?P<userName>\w+)/projects/(?P<projectID>\d+)/$',UserProjects,name = 'user-project-details'),
+                        url(r'^api/(?P<userName>\w+)/projects/(?P<projectID>\d+)/userstories/$',UserStories,name = 'user-stories'),
                       ]

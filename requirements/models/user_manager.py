@@ -20,7 +20,7 @@ from rest_framework.authtoken.models import Token
 
 
 def getActiveUsers():
-    return User.objects.filter(is_active=True)
+    return User.objects.filter(is_active=True)                      
 
 
 def __hasRole(projectID, userID, roleName):
