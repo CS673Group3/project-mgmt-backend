@@ -1,5 +1,4 @@
 from django import forms
-import requirements.models.user_manager
 from requirements.models import user_manager
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import SignUpForm, ChangePwdForm, UserProfileForm
