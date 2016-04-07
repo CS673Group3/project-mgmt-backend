@@ -25,11 +25,9 @@ from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 from requirements.models import project_api
 from requirements.models.story import Story as aStory
-from rest_framework.authentication import SessionAuthentication,\
-    BasicAuthentication, TokenAuthentication
+from rest_framework.authentication import SessionAuthentication,BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
-from nt import link
 
 ## Django REST framework classes...
 class ProjectViewSet(viewsets.ModelViewSet):
