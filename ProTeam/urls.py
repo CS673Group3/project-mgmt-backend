@@ -59,4 +59,5 @@ urlpatterns = [
                         url(r'^api/(?P<userName>\w+)/projects/$',UserProjects,name = 'user-projects'),
                         url(r'^api/(?P<userName>\w+)/projects/(?P<projectID>\d+)/$',UserProjects,name = 'user-project-details'),
                         url(r'^api/(?P<userName>\w+)/projects/(?P<projectID>\d+)/userstories/$',UserStories,name = 'user-stories'),
+                        url(r'^apisignup/', rqmt_views.signUp),
                       ]
