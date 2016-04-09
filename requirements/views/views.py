@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import permission_required
 
 #from forms import registrationForm
 from django import forms
+import json
 
 from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
@@ -78,6 +79,37 @@ class currentUserViewSet(viewsets.ViewSet):
             queryset = project_api.get_stories_for_projects(project)
             serializer = userStorySerializer(queryset,context=serializer_context, many=True)
         return Response(serializer.data)
+    
+def signUp(request):
+    serializer_context = {
+            'request': request,
+        }
+    if request.method == 'POST':
+        req =((request.body).decode('utf-8'))
+        req = json.loads(req)
+        username = req['username']
+        password = req['password']
+        email = req['email']
+        firstname = req['firstname']
+        lastname = req['lastname']
+        
+        #print("a")
+        #username = request.GET.get('username','')
+        #firstname = request.GET.get('firstname', '')
+        #lastname = request.GET.get('lastname', '')
+        #email = request.GET.get('email', '')
+        #password = request.GET.get('password', '')
+        if username is not '' and password is not '':
+            newUser = User.objects.create_user(username, email, password)
+            if firstname is not '' and lastname is not '':
+                newUser.first_name = firstname
+                newUser.last_name = lastname
+            newUser.save()
+            if newUser is not None:
+                queryset = project_api.get_current_user_by_username(newUser.username)
+                serializer = userSerializer(queryset,context=serializer_context, many=True)
+                return JSONResponse(serializer.data,status=200)
+                
         
 class ProjectList(generics.ListAPIView):
     queryset = Project.objects.all()
