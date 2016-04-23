@@ -84,9 +84,9 @@ def signUp(request):
     serializer_context = {
             'request': request,
         }
+    #print request.body
     if request.method == 'POST':
-        req =((request.body).decode('utf-8'))
-        req = json.loads(req)
+        req = json.loads((request.body).decode())
         username = req['username']
         password = req['password']
         email = req['email']
